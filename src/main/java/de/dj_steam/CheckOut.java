@@ -1,6 +1,10 @@
 package de.dj_steam;
 
-import de.dj_steam.strategy.*;
+import de.dj_steam.strategy.AStrategy;
+import de.dj_steam.strategy.BStrategy;
+import de.dj_steam.strategy.CStrategy;
+import de.dj_steam.strategy.DStrategy;
+import de.dj_steam.strategy.PriceCalculator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,12 +12,12 @@ import java.util.List;
 /**
  * Created by steam on 24.02.15.
  */
-public class CheckOut {
+class CheckOut {
 
     private String bucket = "";
-    private List<PricingStrategy> strategies;
+    private List<PriceCalculator> strategies;
 
-    public CheckOut(){
+    CheckOut() {
         initPriceStrategies();
     }
 
@@ -28,28 +32,28 @@ public class CheckOut {
         strategies.add(new DStrategy());
     }
 
-    public int scan(char product){
+    int scan(char product) {
         putIntoBucket(product);
         return updateTotalPrice();
     }
 
-    public int calculatePriceForBucket(String products){
+    int calculatePriceForBucket(String products) {
         int total = 0;
         this.bucket = products;
         PriceContext context = new PriceContext();
 
-        for(PricingStrategy strategy : strategies){
+        for (PriceCalculator strategy : strategies) {
             context.setStrategy(strategy, bucket);
             total += context.calculatePriceForProduct();
         }
         return total;
     }
 
-    private void putIntoBucket(char product){
+    private void putIntoBucket(char product) {
         bucket += product;
     }
 
-    private int updateTotalPrice(){
-      return calculatePriceForBucket(bucket);
+    private int updateTotalPrice() {
+        return calculatePriceForBucket(bucket);
     }
 }
