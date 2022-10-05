@@ -8,7 +8,7 @@ import static org.junit.Assert.assertEquals;
 public class CheckOutTest {
 
     @Test
-    public void testScan() throws Exception {
+    public void testScan(){
         CheckOut testPrice = new CheckOut();
         assertEquals(50, testPrice.scan('A'));
         assertEquals(80, testPrice.scan('B'));
