@@ -1,0 +1,17 @@
+---
+kind: pipeline
+name: "Back to the checkout - pipeline"
+steps:
+  -
+    commands:
+      - "mvn clean test"
+    image: "maven:3.8.2-openjdk-17"
+    name: test
+  -
+    image: appleboy/drone-telegram
+    name: "send telegram notification"
+    settings:
+      to:
+        from_secret: telegram_to
+      token:
+        from_secret: telegram_token
